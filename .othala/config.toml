@@ -1,0 +1,40 @@
+[models]
+enabled = ["claude", "codex", "gemini"]
+default = "codex"
+
+[concurrency]
+per_repo = 8
+claude = 4
+codex = 6
+gemini = 2
+
+[graphite]
+auto_submit = true
+submit_mode_default = "single"
+allow_move = "manual"
+
+[ui]
+web_bind = "127.0.0.1:9843"
+
+[notifications]
+enabled = false
+stdout = true
+
+[daemon]
+tick_interval_secs = 3
+agent_timeout_secs = 3600
+
+[budget]
+enabled = false
+daily_token_limit = 50000000
+monthly_token_limit = 500000000
+
+[permissions]
+default_permission = "allow"
+rules = []
+
+[permissions.model_overrides]
+
+[context_paths]
+paths = ["/home/server/vault-human/life/areas/projects/omniwallet.md"]
+auto_detect = true

@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+set -euo pipefail
+nix develop -c bash -lc 'pnpm -s lint && pnpm -s typecheck && pnpm -s test:unit'

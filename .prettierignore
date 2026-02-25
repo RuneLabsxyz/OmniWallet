@@ -1,0 +1,5 @@
+.data/
+.orch/
+.othala/
+dist/
+node_modules/

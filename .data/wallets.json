@@ -12,15 +12,15 @@
     "derivationPath": "m/84'/0'/0'/0/0"
   },
   {
-    "chain": "solana",
-    "accountIndex": 0,
-    "address": "omni_solana_0_addr",
-    "derivationPath": "m/44'/501'/0'/0'"
-  },
-  {
     "chain": "starknet",
     "accountIndex": 0,
     "address": "omni_starknet_0_addr",
     "derivationPath": "m/2645'/1195502025'/0'/0/0"
+  },
+  {
+    "chain": "solana",
+    "accountIndex": 0,
+    "address": "omni_solana_0_addr",
+    "derivationPath": "m/44'/501'/0'/0'"
   }
 ]
