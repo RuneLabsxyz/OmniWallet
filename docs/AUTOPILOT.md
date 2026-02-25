@@ -8,6 +8,11 @@ OmniWallet is now running in autonomous "ship it" mode with Othala.
 
 ### Task Seeding (Every 3 min)
 
+Preflight hardening now runs before seeding:
+
+- force-track Othala worktree branches with Graphite (`gt track --force`)
+- normalize `.data/wallets.json` formatting in repo/worktrees when JSON is valid
+
 - Cron job runs isolated agent to execute autopilot cycle
 - Reads vault spec (`/home/server/vault-human/life/areas/projects/omniwallet.md`)
 - Extracts Product Requirements + Security/Policy bullet points
