@@ -48,7 +48,6 @@ program
     console.log(JSON.stringify(out, null, 2));
   });
 
-
 program
   .command('execute-tx')
   .requiredOption('--chain <chain>')
@@ -57,10 +56,7 @@ program
   .option('--data <data>')
   .option('--usd <usd>', 'Approx USD value for policy checks', '1')
   .action(async ({ chain, to, value, data, usd }) => {
-    const out = await omni.executeTx(
-      { chain: chain as Chain, to, value, data },
-      Number(usd)
-    );
+    const out = await omni.executeTx({ chain: chain as Chain, to, value, data }, Number(usd));
     console.log(JSON.stringify(out, null, 2));
   });
 
