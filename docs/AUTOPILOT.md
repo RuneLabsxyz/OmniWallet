@@ -7,6 +7,7 @@ OmniWallet is now running in autonomous "ship it" mode with Othala.
 ## How It Works
 
 ### Task Seeding (Every 3 min)
+
 - Cron job runs isolated agent to execute autopilot cycle
 - Reads vault spec (`/home/server/vault-human/life/areas/projects/omniwallet.md`)
 - Extracts Product Requirements + Security/Policy bullet points
@@ -15,6 +16,7 @@ OmniWallet is now running in autonomous "ship it" mode with Othala.
 - **Min queue: 8 parallel tasks**
 
 ### Daemon Execution (Every 3 min)
+
 ```bash
 cd /home/server/clawd/projects/OmniWallet
 othala daemon --once    # processes one iteration of work
@@ -22,6 +24,7 @@ othala daemon --once    # processes one iteration of work
 ```
 
 ### Auto-Merge Mode
+
 - Mode: `merge` (from `.othala/repo-mode.toml`)
 - Graphite: `auto_submit = true`
 - Every task that passes verification merges immediately to `chore/bootstrap-omniwallet-core`
@@ -29,7 +32,9 @@ othala daemon --once    # processes one iteration of work
 - **Ship velocity: continuous**
 
 ### Permissions (Locked)
+
 All system operations are pre-approved:
+
 - `file_read`, `file_write`
 - `shell_exec`, `git_ops`, `network`, `process`
 - `package_install`, `env_access`, `graphite_ops`
@@ -38,27 +43,32 @@ All system operations are pre-approved:
 ## Monitoring
 
 ### Check active tasks
+
 ```bash
 cd /home/server/clawd/projects/OmniWallet
 othala list --json | jq '[.[] | {state: .state, title: .title}]'
 ```
 
 ### Check queue status
+
 ```bash
 othala list --json | jq '[.[] | select(.state=="CHATTING")] | length'
 ```
 
 ### Manual daemon tick
+
 ```bash
 othala daemon --once
 ```
 
 ### Manual seeding
+
 ```bash
 ./scripts/othala/seed-from-vault.sh
 ```
 
 ## Cron Job (Active)
+
 - **ID**: `35125e0a-8c22-4f6a-8ffb-7c4265a255f1`
 - **Schedule**: every 3 minutes (180s)
 - **Action**: isolated agent turn (daemon + seeding)
@@ -87,17 +97,20 @@ othala daemon --once
 ## Stopping/Pausing
 
 To pause autopilot:
+
 ```bash
 # Disable cron job via gateway UI or:
 cron action=update jobId=35125e0a-8c22-4f6a-8ffb-7c4265a255f1 patch='{"enabled":false}'
 ```
 
 To resume:
+
 ```bash
 cron action=update jobId=35125e0a-8c22-4f6a-8ffb-7c4265a255f1 patch='{"enabled":true}'
 ```
 
 To run manual cycles:
+
 ```bash
 cd /home/server/clawd/projects/OmniWallet
 othala daemon --once
@@ -107,6 +120,7 @@ othala daemon --once
 ## What Gets Shipped
 
 Every merged task includes:
+
 - Implementation code (CLI commands, adapters, etc.)
 - E2E tests (black-box user journeys, not just unit tests)
 - Commits + PRs auto-created via Graphite
