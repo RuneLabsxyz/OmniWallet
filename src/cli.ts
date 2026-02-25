@@ -6,6 +6,8 @@ import { BridgeRouter, MockBridgeProvider } from './bridges/router.js';
 import { assertPolicy } from './security/policy.js';
 import type { Chain } from './core/types.js';
 
+import { listWallets } from './storage/walletRegistry.js';
+
 const policy = assertPolicy({
   allowedChains: ['evm', 'solana', 'bitcoin', 'starknet'],
   dailySpendLimitUsd: 500,
@@ -59,6 +61,11 @@ program
     const out = await omni.executeTx({ chain: chain as Chain, to, value, data }, Number(usd));
     console.log(JSON.stringify(out, null, 2));
   });
+
+program.command('list-wallets').action(async () => {
+  const out = await listWallets();
+  console.log(JSON.stringify(out, null, 2));
+});
 
 program.parseAsync(process.argv).catch((err) => {
   console.error(err);

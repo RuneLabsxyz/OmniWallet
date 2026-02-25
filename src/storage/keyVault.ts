@@ -1,4 +1,5 @@
 import type { Chain, SignedTx, TxRequest, WalletDescriptor } from '../core/types.js';
+import { upsertWallet } from './walletRegistry.js';
 
 export interface KeyVault {
   ensureWallet(chain: Chain, accountIndex?: number): Promise<WalletDescriptor>;
@@ -12,12 +13,14 @@ export interface KeyVault {
  */
 export class MockKeyVault implements KeyVault {
   async ensureWallet(chain: Chain, accountIndex = 0): Promise<WalletDescriptor> {
-    return {
+    const descriptor = {
       chain,
       accountIndex,
       address: `omni_${chain}_${accountIndex}_addr`,
       derivationPath: this.pathFor(chain, accountIndex)
     };
+    await upsertWallet(descriptor);
+    return descriptor;
   }
 
   async sign(chain: Chain, request: TxRequest): Promise<SignedTx> {
