@@ -36,6 +36,7 @@ pnpm install
 pnpm verify
 pnpm test:e2e
 pnpm build
+pnpm dev setup-main-wallets
 pnpm dev ensure-wallet --chain starknet
 pnpm dev bridge-quote --from evm --to starknet --token USDC --amount 250
 ```

@@ -62,6 +62,18 @@ program
     console.log(JSON.stringify(out, null, 2));
   });
 
+program.command('setup-main-wallets').action(async () => {
+  const chains: Chain[] = ['evm', 'starknet', 'solana'];
+  const wallets = await Promise.all(chains.map((chain) => omni.ensureWallet(chain)));
+  const out = wallets.map((w) => ({
+    chain: w.chain,
+    publicKey: w.address,
+    accountIndex: w.accountIndex,
+    derivationPath: w.derivationPath
+  }));
+  console.log(JSON.stringify(out, null, 2));
+});
+
 program.command('list-wallets').action(async () => {
   const out = await listWallets();
   console.log(JSON.stringify(out, null, 2));
