@@ -8,46 +8,8 @@ MODEL="${OTHALA_MODEL:-codex}"
 
 cd "$REPO_DIR"
 
-# Preflight: keep Graphite metadata healthy across Othala worktrees.
-# This prevents `gt modify` failures on untracked task branches.
-track_worktrees() {
-  shopt -s nullglob
-  local wt id branch
-  for wt in .orch/wt/chat-*; do
-    [ -e "$wt/.git" ] || continue
-    id="$(basename "$wt")"
-    (
-      cd "$wt"
-      branch="$(git branch --show-current 2>/dev/null || true)"
-      [ -n "$branch" ] || exit 0
-      gt track --force --no-interactive >/dev/null 2>&1 || true
-    )
-  done
-  shopt -u nullglob
-}
-
-# Preflight: normalize generated wallet data in root/worktrees when valid JSON.
-format_wallet_json() {
-  shopt -s nullglob
-  local f
-  for f in .data/wallets.json .orch/wt/chat-*/.data/wallets.json; do
-    [ -f "$f" ] || continue
-    node -e '
-      const fs = require("fs");
-      const p = process.argv[1];
-      try {
-        const j = JSON.parse(fs.readFileSync(p, "utf8"));
-        fs.writeFileSync(p, JSON.stringify(j, null, 2) + "\n");
-      } catch (_) {
-        // Leave invalid files untouched; task lane will surface exact failure.
-      }
-    ' "$f" >/dev/null 2>&1 || true
-  done
-  shopt -u nullglob
-}
-
-track_worktrees
-format_wallet_json
+# Reliability preflight (Graphite tracking + wallet JSON normalization)
+./scripts/othala/preflight-reliability.sh >/dev/null 2>&1 || true
 
 if [ ! -f "$VAULT_DOC" ]; then
   echo "[seed] vault doc missing: $VAULT_DOC"
