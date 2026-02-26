@@ -81,55 +81,55 @@ for c in candidates:
     
     # Public key retrieval
     if 'public key' in lc or 'retrieve' in lc and 'key' in lc:
-        tasks.append('CLI: Implement get-public-key command for any configured wallet on any supported chain')
+        tasks.append('feat(cli): get-public-key for any configured chain wallet')
     # Send/transfer
     elif 'send money' in lc or 'transfer' in lc and 'flow' in lc:
-        tasks.append('Implement send-tx CLI command with preview, fee estimation, and confirmation prompts')
+        tasks.append('feat(send): send-tx with preview, fee estimate, and confirmations')
     # Balance aggregation
     elif 'aggregate' in lc and 'balance' in lc:
-        tasks.append('Implement balance aggregator: per-chain + total USD with live oracle pricing')
+        tasks.append('feat(portfolio): per-chain + total USD balance aggregation')
     # Ledger
     elif 'ledger' in lc or 'activity feed' in lc or 'transaction list' in lc:
-        tasks.append('Implement ledger list command with explorer links and filtering by chain/asset')
+        tasks.append('feat(ledger): list with explorer links + chain/asset filters')
     # Swap/AVNU
     elif 'avnu' in lc or 'swap' in lc and 'starknet' in lc:
-        tasks.append('Integrate AVNU Starknet swap adapter with quote + execute + slippage guards')
+        tasks.append('feat(starknet-swap): AVNU quote/execute with slippage guards')
     # Bridges
     elif 'bridge' in lc and ('cctp' in lc or 'hyperlane' in lc or 'orbiter' in lc):
-        tasks.append('Add bridge adapters (CCTP, Hyperlane, Orbiter) with risk scoring and cost comparison')
+        tasks.append('feat(bridge): CCTP/Hyperlane/Orbiter adapters with risk+cost scoring')
     # Policy
     elif 'policy' in lc or 'cap' in lc or 'allowlist' in lc:
-        tasks.append('Implement policy engine v2: daily/per-tx caps, address allowlists, auto-mode guardrails')
+        tasks.append('feat(policy): v2 caps, allowlists, and auto-mode guardrails')
     # EVM/other chain adapters
     elif 'evm' in lc or '1inch' in lc or 'paraswap' in lc:
-        tasks.append('Add EVM chain adapter with 1inch/0x aggregator integration for swaps')
+        tasks.append('feat(evm): adapter with 1inch/0x swap integration')
     elif 'solana' in lc or 'jupiter' in lc:
-        tasks.append('Add Solana chain adapter with Jupiter swap integration')
+        tasks.append('feat(solana): adapter with Jupiter swap integration')
     elif 'bitcoin' in lc:
-        tasks.append('Add Bitcoin chain adapter for UTXO management and send operations')
+        tasks.append('feat(bitcoin): adapter for UTXO + send operations')
     # Custody/Cartridge
     elif 'cartridge' in lc or 'custody' in lc or 'signer' in lc:
-        tasks.append('Implement optional Cartridge signer integration for Starknet wallet backend')
+        tasks.append('feat(starknet): optional Cartridge signer backend')
     # Interop/intent schema
     elif 'interop' in lc or 'intent' in lc and 'schema' in lc:
-        tasks.append('Define OmniWallet tx-intent schema + CLI interface for all skills to route actions')
+        tasks.append('feat(intent): tx-intent schema + CLI routing interface')
     # Modes
     elif 'mode' in lc and ('safe' in lc or 'guided' in lc or 'auto' in lc):
-        tasks.append('Implement execution modes: safe (always confirm), guided (confirm risky), auto (policy-bound)')
+        tasks.append('feat(modes): safe/guided/auto execution modes')
     # Approval safety
     elif 'approval' in lc:
-        tasks.append('Implement approval limit manager with revoke helpers and phishing checks')
+        tasks.append('feat(approvals): limits, revoke helpers, phishing checks')
     # Error handling/recovery
     elif 'recovery' in lc or 'backup' in lc:
-        tasks.append('Add encrypted wallet backup/export/import and hardware key option skeleton')
+        tasks.append('feat(recovery): encrypted backup/export/import + hardware key skeleton')
     # E2E tests
     elif 'e2e' in lc or 'baseline' in lc or 'regression' in lc:
-        tasks.append('Set up E2E test suite with baseline capture and post-change regression detection')
+        tasks.append('test(e2e): baseline capture + regression detection')
     # Default fallback for unmatched bullets
     else:
         # Clean up and use as-is if short enough
         if len(c) < 100:
-            tasks.append(f'Implement: {c}')
+            tasks.append(f'feat(vault): {c}')
 
 # Dedupe while preserving order
 final = []
