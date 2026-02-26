@@ -6,12 +6,13 @@ OmniWallet is now running in autonomous "ship it" mode with Othala.
 
 ## How It Works
 
-### Task Seeding (Every 3 min)
+### Task Seeding (Every 20 min)
 
 Preflight hardening now runs before seeding:
 
 - force-track Othala worktree branches with Graphite (`gt track --force`)
 - normalize `.data/wallets.json` formatting in repo/worktrees when JSON is valid
+- operator report is structured by: queue summary, blocked tasks, ready tasks, seeded-from-vault tasks
 
 - Cron job runs isolated agent to execute autopilot cycle
 - Reads vault spec (`/home/server/vault-human/life/areas/projects/omniwallet.md`)
@@ -20,7 +21,7 @@ Preflight hardening now runs before seeding:
 - Queues new tasks if active queue < 8 tasks
 - **Min queue: 8 parallel tasks**
 
-### Daemon Execution (Every 3 min)
+### Daemon Execution (Every 20 min)
 
 ```bash
 cd /home/server/clawd/projects/OmniWallet
@@ -75,13 +76,13 @@ othala daemon --once
 ## Cron Job (Active)
 
 - **ID**: `35125e0a-8c22-4f6a-8ffb-7c4265a255f1`
-- **Schedule**: every 3 minutes (180s)
+- **Schedule**: every 20 minutes (1200s)
 - **Action**: isolated agent turn (daemon + seeding)
 - **Next run**: automatic
 
 ## Expected Behavior
 
-1. **Every 3 minutes:**
+1. **Every 20 minutes:**
    - Othala daemon processes active tasks
    - For tasks in READY → picks up and sends to AI agent
    - For tasks CHATTING → waits on agent output
@@ -95,7 +96,7 @@ othala daemon --once
    - Graphite auto-submit merges without bottleneck
 
 3. **Vault-driven loop:**
-   - New features added to vault spec → automatically seeded as tasks within next 3 min
+   - New features added to vault spec → automatically seeded as tasks within next 20 min
    - Implementation → merged
    - **Loop: spec → seed → implement → ship → repeat**
 
